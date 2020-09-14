@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="product"
+            type="lt.manufaktura.app.model.product.Product" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/product_item_card_view_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/product_item_image_view_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintHeight_min="100dp"
+                android:layout_margin="8dp"
+                android:contentDescription="@{product.productPicture}"
+                android:minWidth="96dp"
+                android:minHeight="96dp"
+                app:layout_constraintBottom_toTopOf="@id/product_item_description_title_txt_id"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/product_item_name_title_txt_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/product_item_name"
+                app:layout_constraintStart_toEndOf="@+id/product_item_image_view_id"
+                app:layout_constraintTop_toTopOf="@+id/product_item_image_view_id" />
+
+            <TextView
+                android:id="@+id/product_item_section_title_txt_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/product_item_section"
+                app:layout_constraintStart_toEndOf="@+id/product_item_image_view_id"
+                app:layout_constraintStart_toStartOf="@+id/product_item_name_title_txt_id"
+                app:layout_constraintTop_toBottomOf="@id/product_item_name_title_txt_id" />
+
+            <TextView
+                android:id="@+id/product_item_category_title_txt_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/product_item_category"
+                app:layout_constraintStart_toEndOf="@+id/product_item_image_view_id"
+                app:layout_constraintStart_toStartOf="@+id/product_item_name_title_txt_id"
+                app:layout_constraintTop_toBottomOf="@id/product_item_section_title_txt_id" />
+
+            <TextView
+                android:id="@+id/product_item_price_title_txt_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/product_item_price"
+                app:layout_constraintStart_toStartOf="@+id/product_item_name_title_txt_id"
+                app:layout_constraintTop_toBottomOf="@id/product_item_category_title_txt_id" />
+
+            <TextView
+                android:id="@+id/product_item_name_txt_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{product.name}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/product_item_name_title_txt_id"
+                app:layout_constraintTop_toTopOf="@+id/product_item_image_view_id" />
+
+            <TextView
+                android:id="@+id/product_item_section_txt_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{product.section}"
+                app:layout_constraintStart_toEndOf="@+id/product_item_name_title_txt_id"
+                app:layout_constraintStart_toStartOf="@+id/product_item_name_txt_id"
+                app:layout_constraintTop_toBottomOf="@id/product_item_name_txt_id" />
+
+            <TextView
+                android:id="@+id/product_item_category_txt_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{product.category}"
+                app:layout_constraintStart_toEndOf="@+id/product_item_name_title_txt_id"
+                app:layout_constraintStart_toStartOf="@+id/product_item_section_txt_id"
+                app:layout_constraintTop_toBottomOf="@id/product_item_section_txt_id" />
+
+            <TextView
+                android:id="@+id/product_item_price_txt_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{"" + product.price}'
+                app:layout_constraintStart_toEndOf="@+id/product_item_name_title_txt_id"
+                app:layout_constraintStart_toStartOf="@+id/product_item_category_txt_id"
+                app:layout_constraintTop_toBottomOf="@id/product_item_category_txt_id" />
+
+            <TextView
+                android:id="@+id/product_item_description_title_txt_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center"
+                android:text="@string/product_item_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/product_item_image_view_id" />
+
+            <TextView
+                android:id="@+id/product_item_description_txt_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text='@{product.productPictureUrl + "\n" + product.description + "\n" + product.productPicture}'
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/product_item_description_title_txt_id" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

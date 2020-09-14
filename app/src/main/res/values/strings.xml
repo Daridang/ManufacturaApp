@@ -1,0 +1,66 @@
+<resources>
+    <string name="app_name">ManufakturaApp</string>
+    <string name="hint_email_mail_com">email@mail.com</string>
+    <string name="hint_password">password</string>
+    <string name="login_btn_txt">Login</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+
+    <!--    Barcode fragment-->
+    <string name="barcode_header">Click &quot;Read Barcode&quot; to read a barcode</string>
+    <string name="read_barcode">Read Barcode</string>
+    <string name="auto_focus">Auto Focus</string>
+    <string name="use_flash">Use Flash</string>
+    <string name="barcode_success">Barcode read successfully</string>
+    <string name="barcode_failure">No barcode captured</string>
+    <string name="barcode_error">"Error reading barcode: %1$s"</string>
+    <string name="ok">OK</string>
+    <string name="permission_camera_rationale">Access to the camera is needed for detection</string>
+    <string name="no_camera_permission">This application cannot run because it does not have the camera permission.  The application will now exit.</string>
+    <string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage</string>
+
+
+    <string name="register_btn_text">Register</string>
+    <string name="account_toolbar_title_txtv">Your Account</string>
+    <string name="show_data_btn_txt">Show Data</string>
+    <string name="enter_data_btn_txt">Enter Data</string>
+    <string name="register_btn_txt">Register</string>
+    <string name="save_data_btn_txt">Save</string>
+    <string name="product_name_hint">Pavadinimas</string>
+    <string name="section_hint">Sekcija</string>
+    <string name="price_hint">Kaina</string>
+    <string name="category_hint">Kategorija</string>
+    <string name="description_hint">Aprašymas</string>
+
+    <string-array name="data_types">
+        <item>Text</item>
+        <item>Digits</item>
+        <item>Date</item>
+        <item>Money</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="album_btn_txt">Album</string>
+    <string name="product_item_name">Pavadinimas:</string>
+    <string name="product_item_section">Sekcija:</string>
+    <string name="product_item_category">Kategorija:</string>
+    <string name="product_item_price">Kaina:</string>
+    <string name="product_item_description">Aprašymas</string>
+    <string name="dummy_txt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate pulvinar luctus. Integer sed felis ligula. Integer et est laoreet arcu vulputate scelerisque sit amet et tellus. Praesent efficitur est eu nunc ultrices, ut hendrerit orci lacinia. Proin ultricies, sem eget tincidunt dictum, velit tellus sollicitudin lacus, ac finibus tortor nunc vitae mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nunc condimentum odio rhoncus, vehicula felis id, finibus sapien. Vestibulum finibus justo at turpis malesuada, in faucibus urna sollicitudin. Sed tempus condimentum lectus. Curabitur bibendum diam id laoreet sagittis. Sed quis tincidunt tortor.</string>
+    <string name="product_menu_item_title">Produkcija</string>
+    <string name="entity_menu_item_title">Skaičiuoklė</string>
+    <string name="edit_product_details_btn">Redaguoti</string>
+    <string name="delete_product_btn">Trinti</string>
+    <string name="next_btn_txt">Next</string>
+    <string name="save_product_btn_txt">Save</string>
+    <string name="open_gallery_btn_txt">Gallery</string>
+    <string name="take_picture_btn_txt">Take Picture</string>
+    <string name="create_btn_txt">Create</string>
+</resources>

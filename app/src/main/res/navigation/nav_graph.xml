@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="lt.manufaktura.app.user.login.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="lt.manufaktura.app.user.account.AccountFragment"
+        android:label="AccountFragment"
+        tools:layout="@layout/fragment_account">
+        <action
+            android:id="@+id/action_accountFragment_to_createEntityFragment"
+            app:destination="@id/createEntityFragment" />
+        <action
+            android:id="@+id/action_accountFragment_to_userProductionFragment"
+            app:destination="@id/userProductionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="lt.manufaktura.app.user.register.RegisterFragment"
+        android:label="RegisterFragment"
+        tools:layout="@layout/fragment_register">
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_registerFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addDataFragment"
+        android:name="lt.manufaktura.app.user.account.AddDataFragment"
+        android:label="AddDataFragment"
+        tools:layout="@layout/fragment_add_data">
+        <action
+            android:id="@+id/action_addDataFragment_to_scannerActivity"
+            app:destination="@id/scannerActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/scannerActivity"
+        android:name="lt.manufaktura.app.scanner.ScannerActivity"
+        android:label="ScannerActivity"
+        tools:layout="@layout/activity_scanner" />
+
+    <!--    <include app:graph="@navigation/bottom_nav_graph" />-->
+
+<!--    <fragment-->
+<!--        android:id="@+id/userProductionFragment"-->
+<!--        android:name="lt.manufaktura.app.user.account.product.UserProductionFragment"-->
+<!--        android:label="UserProductionFragment"-->
+<!--        tools:layout="@layout/fragment_user_production">-->
+<!--        <action-->
+<!--            android:id="@+id/action_userProductionFragment_to_productNameFragment"-->
+<!--            app:destination="@id/productNameFragment" />-->
+<!--    </fragment>-->
+<!--    <fragment-->
+<!--        android:id="@+id/productNameFragment"-->
+<!--        android:name="lt.manufaktura.app.user.account.product.create.ProductNameFragment"-->
+<!--        android:label="ProductNameFragment"-->
+<!--        tools:layout="@layout/fragment_product_name">-->
+<!--        <action-->
+<!--            android:id="@+id/action_productNameFragment_to_productCategoryFragment"-->
+<!--            app:destination="@id/productCategoryFragment" />-->
+<!--    </fragment>-->
+<!--    <fragment-->
+<!--        android:id="@+id/productCategoryFragment"-->
+<!--        android:name="lt.manufaktura.app.user.account.product.create.ProductCategoryFragment"-->
+<!--        android:label="ProductCategoryFragment"-->
+<!--        tools:layout="@layout/fragment_product_category">-->
+<!--        <action-->
+<!--            android:id="@+id/action_productCategoryFragment_to_productSectionFragment"-->
+<!--            app:destination="@id/productSectionFragment" />-->
+<!--    </fragment>-->
+<!--    <fragment-->
+<!--        android:id="@+id/productSectionFragment"-->
+<!--        android:name="lt.manufaktura.app.user.account.product.create.ProductSectionFragment"-->
+<!--        android:label="ProductSectionFragment"-->
+<!--        tools:layout="@layout/fragment_product_section">-->
+<!--        <action-->
+<!--            android:id="@+id/action_productSectionFragment_to_productDescriptionFragment"-->
+<!--            app:destination="@id/productDescriptionFragment" />-->
+<!--    </fragment>-->
+<!--    <fragment-->
+<!--        android:id="@+id/productDescriptionFragment"-->
+<!--        android:name="lt.manufaktura.app.user.account.product.create.ProductDescriptionFragment"-->
+<!--        android:label="ProductDescriptionFragment"-->
+<!--        tools:layout="@layout/fragment_product_description">-->
+<!--        <action-->
+<!--            android:id="@+id/action_productDescriptionFragment_to_productPriceFragment"-->
+<!--            app:destination="@id/productPriceFragment" />-->
+<!--    </fragment>-->
+<!--    <fragment-->
+<!--        android:id="@+id/productPriceFragment"-->
+<!--        android:name="lt.manufaktura.app.user.account.product.create.ProductPriceFragment"-->
+<!--        android:label="ProductPriceFragment"-->
+<!--        tools:layout="@layout/fragment_product_price">-->
+<!--        <action-->
+<!--            android:id="@+id/action_productPriceFragment_to_productPictureFragment"-->
+<!--            app:destination="@id/productPictureFragment" />-->
+<!--    </fragment>-->
+<!--    <fragment-->
+<!--        android:id="@+id/productPictureFragment"-->
+<!--        android:name="lt.manufaktura.app.user.account.product.create.ProductPictureFragment"-->
+<!--        android:label="ProductPictureFragment"-->
+<!--        tools:layout="@layout/fragment_product_picture" />-->
+<!--    <fragment-->
+<!--        android:id="@+id/showDataFragment"-->
+<!--        android:name="lt.manufaktura.app.user.account.ShowDataFragment"-->
+<!--        android:label="ShowDataFragment"-->
+<!--        tools:layout="@layout/fragment_show_data" />-->
+<!--    <fragment-->
+<!--        android:id="@+id/createEntityFragment"-->
+<!--        android:name="lt.manufaktura.app.user.account.CreateEntityFragment"-->
+<!--        android:label="CreateEntityFragment"-->
+<!--        tools:layout="@layout/fragment_create_entity">-->
+<!--        <action-->
+<!--            android:id="@+id/action_createEntityFragment_to_addPropertiesFragment"-->
+<!--            app:destination="@id/addPropertiesFragment" />-->
+<!--    </fragment>-->
+<!--    <fragment-->
+<!--        android:id="@+id/addPropertiesFragment"-->
+<!--        android:name="lt.manufaktura.app.user.account.AddPropertiesFragment"-->
+<!--        android:label="AddPropertiesFragment"-->
+<!--        tools:layout="@layout/fragment_add_properties" />-->
+</navigation>

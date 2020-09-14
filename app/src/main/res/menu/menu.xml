@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@id/userProductionFragment"
+        android:icon="@android:drawable/btn_star_big_on"
+        android:title="@string/product_menu_item_title" />
+
+<!--    <item-->
+<!--        android:id="@id/showDataFragment"-->
+<!--        android:icon="@android:drawable/btn_star_big_on"-->
+<!--        android:title="ShowData" />-->
+
+    <item
+        android:id="@id/createEntityFragment"
+        android:icon="@android:drawable/btn_star_big_on"
+        android:title="@string/entity_menu_item_title" />
+</menu>
