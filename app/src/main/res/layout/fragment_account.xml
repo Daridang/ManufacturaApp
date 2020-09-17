@@ -7,30 +7,6 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/account_fragment_toolbar_id"
-            android:layout_width="0dp"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            android:gravity="center_horizontal|center_vertical"
-            android:minHeight="?attr/actionBarSize"
-            app:navigationIcon="@drawable/ic_arrow_back"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <TextView
-                android:id="@+id/toolbar_title_txt_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="?attr/actionBarSize"
-                android:layout_marginEnd="?attr/actionBarSize"
-                android:gravity="center"
-                android:text="@string/account_toolbar_title_txtv"
-                android:textColor="@android:color/white"
-                android:textSize="20sp" />
-        </androidx.appcompat.widget.Toolbar>
-
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/account_nav_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
@@ -40,8 +16,7 @@
             app:layout_constraintBottom_toTopOf="@id/account_bottom_nav_id"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-
-            app:layout_constraintTop_toBottomOf="@id/account_fragment_toolbar_id"
+            app:layout_constraintTop_toTopOf="parent"
             app:navGraph="@navigation/bottom_nav_graph" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
