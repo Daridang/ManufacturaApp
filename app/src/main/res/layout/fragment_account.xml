@@ -9,22 +9,26 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/account_fragment_toolbar_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/darker_gray"
-            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:gravity="center_horizontal|center_vertical"
+            android:minHeight="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
+                android:id="@+id/toolbar_title_txt_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_marginRight="?attr/actionBarSize"
+                android:layout_marginEnd="?attr/actionBarSize"
                 android:gravity="center"
                 android:text="@string/account_toolbar_title_txtv"
                 android:textColor="@android:color/white"
-                android:textSize="22sp" />
+                android:textSize="20sp" />
         </androidx.appcompat.widget.Toolbar>
 
         <androidx.fragment.app.FragmentContainerView

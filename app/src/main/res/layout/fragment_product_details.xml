@@ -13,6 +13,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_id"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:gravity="center_horizontal|center_vertical"
+            android:minHeight="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/toolbar_title_txt_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="?attr/actionBarSize"
+                android:layout_marginEnd="?attr/actionBarSize"
+                android:gravity="center"
+                android:text="Product details"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+        </androidx.appcompat.widget.Toolbar>
+
         <ImageView
             android:id="@+id/single_product_image_view_id"
             android:layout_width="match_parent"
@@ -20,7 +44,7 @@
             app:layout_constraintBottom_toTopOf="@+id/product_details_name_title_txt_id"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/toolbar_id" />
 
         <TextView
             android:id="@+id/product_details_name_title_txt_id"
