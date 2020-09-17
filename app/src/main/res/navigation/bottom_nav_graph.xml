@@ -99,6 +99,7 @@
             app:argType="lt.manufaktura.app.model.product.Product" />
         <action
             android:id="@+id/action_productDetailsFragment_to_userProductionFragment"
+            app:popUpTo="@id/userProductionFragment"
             app:destination="@id/userProductionFragment" />
         <action
             android:id="@+id/action_productDetailsFragment_to_productNameFragment"

@@ -63,6 +63,13 @@ public class ProductDetailsFragment extends Fragment {
                     .findNavController(this)
                     .navigate(navDirections);
         });
+
+        binding.toolbarId.setNavigationOnClickListener(v -> {
+            NavHostFragment
+                    .findNavController(this)
+                    .navigate(R.id.action_productDetailsFragment_to_userProductionFragment);
+        });
+
         return binding.getRoot();
     }
 }

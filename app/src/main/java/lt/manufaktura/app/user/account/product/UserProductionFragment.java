@@ -60,6 +60,10 @@ public class UserProductionFragment extends Fragment implements OnRecyclerViewIt
                     .findNavController(this)
                     .navigate(R.id.action_userProductionFragment_to_productNameFragment);
         });
+//
+//        binding.toolbarId.setNavigationOnClickListener(v -> {
+//            Log.d("TAGG", "Clicked user production fragment");
+//        });
 
         return binding.getRoot();
     }
