@@ -42,6 +42,7 @@ import static android.app.Activity.RESULT_OK;
 @AndroidEntryPoint
 public class ProductPictureFragment extends Fragment {
     static final int REQUEST_TAKE_PHOTO = 1;
+    static final int REQUEST_PICK_PHOTO = 2;
     String currentPhotoPath;
     private ProductViewModel productViewModel;
     private FragmentProductPictureBinding binding;
@@ -79,7 +80,24 @@ public class ProductPictureFragment extends Fragment {
         binding.takePictureBtnId.setOnClickListener(v -> {
             dispatchTakePictureIntent();
         });
+
+        binding.openGalleryBtnId.setOnClickListener(v -> {
+            pickFromGallery();
+        });
         return binding.getRoot();
+    }
+//
+//    private fun pickFromGallery() {
+//        val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+//        gallery.type = "image/*"
+//        startActivityForResult(gallery, ImageSource.GALLERY.key)
+//    }
+
+    private void pickFromGallery() {
+        Intent gallery = new Intent(Intent.ACTION_PICK,
+                MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        Intent intent = gallery.setType("image/*");
+        startActivityForResult(intent, REQUEST_PICK_PHOTO);
     }
 
     private void uploadImage() {
@@ -185,7 +203,7 @@ public class ProductPictureFragment extends Fragment {
 
         Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
         binding.imageViewId.setImageBitmap(bitmap);
-        galleryAddPic();
+//        galleryAddPic();
     }
 
     @Override
@@ -194,6 +212,21 @@ public class ProductPictureFragment extends Fragment {
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
             Log.d("TAGGG", " onActivityResult, result: " + resultCode);
             setPic();
+        }
+
+        if (requestCode == REQUEST_PICK_PHOTO && resultCode == RESULT_OK) {
+            if (data != null) {
+                Uri uri = data.getData();
+                try {
+                    Bitmap bitmap =
+                            MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), uri);
+                    // Log.d(TAG, String.valueOf(bitmap));
+
+                    binding.imageViewId.setImageBitmap(bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
