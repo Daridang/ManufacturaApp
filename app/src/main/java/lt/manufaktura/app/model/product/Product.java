@@ -7,6 +7,9 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by
  * +-+-+-+-+-+-+-+-+
@@ -19,16 +22,25 @@ public class Product implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     public int productID;
 
+//    @SerializedName("Name")
     private String name;
+//    @SerializedName("Section")
     private String section;
+//    @SerializedName("Price")
     private double price;
+//    @SerializedName("Category")
     private String category;
+//    @SerializedName("Description")
     private String description;
+//    @SerializedName("ProductPicture")
     private String productPicture;
+//    @SerializedName("ProductPictureUrl")
     private String productPictureUrl;
+//    @SerializedName("ProductImage")
+    private String productImage;
 
     Product(int productID, String name, String section, double price, String category, String description,
-            String productPicture, String productPictureUrl) {
+            String productPicture, String productPictureUrl, String productImage) {
         this.productID = productID;
         this.name = name;
         this.section = section;
@@ -37,6 +49,7 @@ public class Product implements Parcelable {
         this.description = description;
         this.productPicture = productPicture;
         this.productPictureUrl = productPictureUrl;
+        this.productImage = productImage;
     }
 
     @Ignore
@@ -51,6 +64,7 @@ public class Product implements Parcelable {
         description = in.readString();
         productPicture = in.readString();
         productPictureUrl = in.readString();
+        productImage = in.readString();
     }
 
     public static final Creator<Product> CREATOR = new Creator<Product>() {
@@ -140,6 +154,7 @@ public class Product implements Parcelable {
                 ", description='" + description + '\'' +
                 ", picture='" + productPicture + '\'' +
                 ", pictureUrl='" + productPictureUrl + '\'' +
+                ", pictureImage='" + productImage + '\'' +
                 '}';
     }
 
@@ -158,5 +173,14 @@ public class Product implements Parcelable {
         dest.writeString(description);
         dest.writeString(productPicture);
         dest.writeString(productPictureUrl);
+        dest.writeString(productImage);
+    }
+
+    public String getProductImage() {
+        return productImage;
+    }
+
+    public void setProductImage(String productImage) {
+        this.productImage = productImage;
     }
 }

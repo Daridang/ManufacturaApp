@@ -1,5 +1,6 @@
 package lt.manufaktura.app.user.account.product;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -8,12 +9,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import lt.manufaktura.app.R;
@@ -30,6 +32,9 @@ public class UserProductionFragment extends Fragment implements OnRecyclerViewIt
     private FragmentUserProductionBinding binding;
     private ProductAdapter adapter;
 
+    @Inject
+    SharedPreferences prefs;
+
     public UserProductionFragment() {
         // Required empty public constructor
     }
@@ -39,7 +44,7 @@ public class UserProductionFragment extends Fragment implements OnRecyclerViewIt
         super.onCreate(savedInstanceState);
         adapter = new ProductAdapter(new ArrayList<>(), this);
         productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
-        productViewModel.getProducts();
+        productViewModel.getProducts("Bearer " + prefs.getString("Token", ""));
         productViewModel.products.observe(this, products -> {
             adapter.setProducts(products);
             adapter.notifyDataSetChanged();
@@ -60,11 +65,6 @@ public class UserProductionFragment extends Fragment implements OnRecyclerViewIt
                     .findNavController(this)
                     .navigate(R.id.action_userProductionFragment_to_productNameFragment);
         });
-//
-//        binding.toolbarId.setNavigationOnClickListener(v -> {
-//            Log.d("TAGG", "Clicked user production fragment");
-//        });
-
         return binding.getRoot();
     }
 

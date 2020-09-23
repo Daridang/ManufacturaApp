@@ -36,7 +36,7 @@ public class HiltNetworkModule {
     @Singleton
     public static Retrofit provideBaseRetrofit(OkHttpClient client) {
         return new Retrofit.Builder()
-                .baseUrl(Const.BASE_API_URL)
+                .baseUrl(Const.BASE_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

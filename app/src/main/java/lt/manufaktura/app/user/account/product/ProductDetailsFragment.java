@@ -1,5 +1,6 @@
 package lt.manufaktura.app.user.account.product;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -16,6 +17,8 @@ import android.view.ViewGroup;
 
 import java.util.Objects;
 
+import javax.inject.Inject;
+
 import dagger.hilt.android.AndroidEntryPoint;
 import lt.manufaktura.app.R;
 import lt.manufaktura.app.databinding.FragmentProductDetailsBinding;
@@ -24,6 +27,9 @@ import lt.manufaktura.app.model.product.ProductViewModel;
 
 @AndroidEntryPoint
 public class ProductDetailsFragment extends Fragment {
+
+    @Inject
+    SharedPreferences prefs;
 
     private ProductViewModel productViewModel;
 
@@ -49,7 +55,8 @@ public class ProductDetailsFragment extends Fragment {
 
         binding.setProduct(requireArguments().getParcelable("product"));
         binding.deleteProductDetailsBtnId.setOnClickListener(v -> {
-            productViewModel.deleteProduct(binding.getProduct().getProductID());
+            productViewModel.deleteProduct("Bearer " + prefs.getString("Token", ""),
+                    binding.getProduct().getProductID());
             NavHostFragment
                     .findNavController(this)
                     .navigate(R.id.action_productDetailsFragment_to_userProductionFragment);

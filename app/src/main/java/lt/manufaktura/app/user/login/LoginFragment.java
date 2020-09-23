@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.d("TAGG", "wtf: LoginFragment");
     }
 
     @Override
@@ -73,9 +74,10 @@ public class LoginFragment extends Fragment {
         flb.loginBtnId.setOnClickListener(v -> {
 //                    viewModel.login(email, password);
                     flb.loadingBarId.setVisibility(View.VISIBLE);
-                    viewModel.login("Section@manufaktura.lt", "Manufaktura2!");
+                    viewModel.login("stalius@manufaktura.lt", "Manufaktura2!");
                     viewModel.getLoginResult().observe(getViewLifecycleOwner(), loginResult -> {
                         if (loginResult != null) {
+                            Log.d("TAGG", "wtf: " + loginResult.getToken());
                             flb.loadingBarId.setVisibility(View.GONE);
                             SharedPreferences.Editor spEditor = prefs.edit();
                             spEditor.putString("Token", loginResult.getToken());

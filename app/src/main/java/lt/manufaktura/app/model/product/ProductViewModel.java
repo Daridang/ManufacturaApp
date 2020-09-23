@@ -54,8 +54,8 @@ public class ProductViewModel extends ViewModel {
         _product.setValue(product);
     }
 
-    public void getProducts() {
-        disposable.add(productRepository.getProducts()
+    public void getProducts(String token) {
+        disposable.add(productRepository.getProducts(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(productResponse -> {
@@ -68,14 +68,6 @@ public class ProductViewModel extends ViewModel {
         );
     }
 
-    public void uploadProduct(RequestBody product) {
-
-        productRepository.uploadProduct(product);
-//
-//        Call<UserResponse> call = application.getMyAPIService().updateUser(application.getCurrentUser().token, application.getCurrentUser().id, requestBody);
-
-    }
-
     public void insertProduct(Product product) {
         Completable.fromAction(() -> productRepository.insert(product))
                 .subscribeOn(Schedulers.io())
@@ -83,23 +75,23 @@ public class ProductViewModel extends ViewModel {
                 .subscribe();
     }
 
-    public void createProduct(Product product) {
-        disposable.add(productRepository.createProduct(product)
+    public void createProduct(String token, Product product) {
+        disposable.add(productRepository.createProduct(token, product)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         v -> {
-                            Log.d("TAGGG", "?? " + v);
+                            Log.d("TAGGG", "?? " + v.toString());
                         },
                         throwable -> {
-                            Log.d("TAGGG", "wtf: " + throwable.getMessage());
+                            Log.d("TAGGG", "wtf throwable : " + throwable.getMessage());
                         }
                 )
         );
     }
 
-    public void editProduct(Product product) {
-        disposable.add(productRepository.updateProduct(product)
+    public void editProduct(String token, Product product) {
+        disposable.add(productRepository.updateProduct(token, product)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -113,8 +105,8 @@ public class ProductViewModel extends ViewModel {
         );
     }
 
-    public void deleteProduct(int id) {
-        disposable.add(productRepository.deleteProduct(id)
+    public void deleteProduct(String token, int id) {
+        disposable.add(productRepository.deleteProduct(token, id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
