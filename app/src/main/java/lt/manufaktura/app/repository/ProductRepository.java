@@ -72,9 +72,9 @@ public class ProductRepository {
     }
 
     public Single<Integer> updateProduct(String token, Product product) {
-        return productAPI.editProduct(
+        return productAPI.addProduct(
                 token,
-                product.getProductID(),
+//                product.getProductID(),
                 product.getName(),
                 product.getSection(),
                 product.getPrice(),

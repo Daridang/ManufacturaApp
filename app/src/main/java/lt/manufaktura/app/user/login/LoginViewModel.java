@@ -32,6 +32,8 @@ public class LoginViewModel extends ViewModel {
         return _loginResult;
     }
 
+    private String email;
+
     @ViewModelInject
     public LoginViewModel(LoginRepository repository) {
         this.repository = repository;
@@ -56,7 +58,11 @@ public class LoginViewModel extends ViewModel {
         );
     }
 
-    public String userName() {
-        return "Username";
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String userEmail() {
+        return email;
     }
 }

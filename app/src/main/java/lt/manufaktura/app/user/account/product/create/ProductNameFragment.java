@@ -1,5 +1,6 @@
 package lt.manufaktura.app.user.account.product.create;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -11,7 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+
+import javax.inject.Inject;
+
 import dagger.hilt.android.AndroidEntryPoint;
+import lt.manufaktura.app.Const;
 import lt.manufaktura.app.R;
 import lt.manufaktura.app.databinding.FragmentProductNameBinding;
 import lt.manufaktura.app.model.product.Product;
@@ -21,6 +27,8 @@ import lt.manufaktura.app.model.product.ProductViewModel;
 @AndroidEntryPoint
 public class ProductNameFragment extends Fragment {
 
+    @Inject
+    SharedPreferences prefs;
     private ProductViewModel productViewModel;
 
     public ProductNameFragment() {
@@ -49,10 +57,12 @@ public class ProductNameFragment extends Fragment {
         });
 
         binding.setViewmodel(productViewModel);
-        Product product = requireArguments().getParcelable("product");
-        if (product != null) {
-            binding.setProduct(product);
-            productViewModel.setProduct(product);
+        int productId = requireArguments().getInt("productId");
+        if(productId > 0) {
+            productViewModel.getProductById("Bearer " + prefs.getString("Token", ""), productId);
+            productViewModel.product.observe(getViewLifecycleOwner(), product -> {
+                binding.setProduct(product);
+            });
         } else {
             binding.setProduct(productViewModel.getEmptyProduct());
             productViewModel.setProduct(binding.getProduct());

@@ -72,14 +72,14 @@ public class ProductDetailsFragment extends Fragment {
                     .navigate(R.id.action_productDetailsFragment_to_userProductionFragment);
         });
 
-        binding.editProductDetailsBtnId.setOnClickListener(v -> {
-            NavDirections navDirections =
-                    ProductDetailsFragmentDirections.actionProductDetailsFragmentToProductEditNameFragment(binding.getProduct());
-
-            NavHostFragment
-                    .findNavController(this)
-                    .navigate(navDirections);
-        });
+//        binding.editProductDetailsBtnId.setOnClickListener(v -> {
+//            NavDirections navDirections =
+//                    ProductDetailsFragmentDirections.actionProductDetailsFragmentToProductNameFragment(binding.getProduct().getProductID());
+//
+//            NavHostFragment
+//                    .findNavController(this)
+//                    .navigate(navDirections);
+//        });
 
         binding.toolbarId.setNavigationOnClickListener(v -> {
             NavHostFragment

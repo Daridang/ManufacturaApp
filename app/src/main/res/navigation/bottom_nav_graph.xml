@@ -15,8 +15,7 @@
             app:destination="@id/productNameFragment" />
         <action
             android:id="@+id/action_userProductionFragment_to_productDetailsFragment"
-            app:destination="@id/productDetailsFragment">
-        </action>
+            app:destination="@id/productDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/productNameFragment"
@@ -27,8 +26,8 @@
             android:id="@+id/action_productNameFragment_to_productCategoryFragment"
             app:destination="@id/productCategoryFragment" />
         <argument
-            android:name="product"
-            app:argType="lt.manufaktura.app.model.product.Product" />
+            android:name="productId"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/productCategoryFragment"
@@ -70,7 +69,7 @@
         android:id="@+id/productPictureFragment"
         android:name="lt.manufaktura.app.user.account.product.create.ProductPictureFragment"
         android:label="ProductPictureFragment"
-        tools:layout="@layout/fragment_product_picture" >
+        tools:layout="@layout/fragment_product_picture">
         <action
             android:id="@+id/action_productPictureFragment_to_userProductionFragment"
             app:destination="@id/userProductionFragment" />
@@ -95,34 +94,37 @@
         android:label="ProductDetailsFragment"
         tools:layout="@layout/fragment_product_details">
         <argument
-            android:name="product"
-            app:argType="lt.manufaktura.app.model.product.Product" />
+            android:name="productId"
+            app:argType="integer" />
         <action
             android:id="@+id/action_productDetailsFragment_to_userProductionFragment"
-            app:popUpTo="@id/userProductionFragment"
-            app:destination="@id/userProductionFragment" />
+            app:destination="@id/userProductionFragment"
+            app:popUpTo="@id/userProductionFragment" />
         <action
             android:id="@+id/action_productDetailsFragment_to_productNameFragment"
             app:destination="@id/productNameFragment" />
         <action
             android:id="@+id/action_productDetailsFragment_to_productEditNameFragment"
             app:destination="@id/productEditNameFragment" />
+        <action
+            android:id="@+id/action_productDetailsFragment_to_fullScreenImageFragment"
+            app:destination="@id/fullScreenImageFragment" />
     </fragment>
     <fragment
         android:id="@+id/productEditNameFragment"
         android:name="lt.manufaktura.app.user.account.product.edit.ProductEditNameFragment"
-        android:label="ProductEditNameFragment" >
+        android:label="ProductEditNameFragment">
         <action
             android:id="@+id/action_productEditNameFragment_to_productEditCategoryFragment"
             app:destination="@id/productEditCategoryFragment" />
         <argument
-            android:name="product"
-            app:argType="lt.manufaktura.app.model.product.Product" />
+            android:name="productId"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/productEditCategoryFragment"
         android:name="lt.manufaktura.app.user.account.product.edit.ProductEditCategoryFragment"
-        android:label="ProductEditCategoryFragment" >
+        android:label="ProductEditCategoryFragment">
         <action
             android:id="@+id/action_productEditCategoryFragment_to_productEditSectionFragment"
             app:destination="@id/productEditSectionFragment" />
@@ -130,7 +132,7 @@
     <fragment
         android:id="@+id/productEditSectionFragment"
         android:name="lt.manufaktura.app.user.account.product.edit.ProductEditSectionFragment"
-        android:label="ProductEditSectionFragment" >
+        android:label="ProductEditSectionFragment">
         <action
             android:id="@+id/action_productEditSectionFragment_to_productEditDescriptionFragment"
             app:destination="@id/productEditDescriptionFragment" />
@@ -138,7 +140,7 @@
     <fragment
         android:id="@+id/productEditDescriptionFragment"
         android:name="lt.manufaktura.app.user.account.product.edit.ProductEditDescriptionFragment"
-        android:label="ProductEditDescriptionFragment" >
+        android:label="ProductEditDescriptionFragment">
         <action
             android:id="@+id/action_productEditDescriptionFragment_to_productEditPriceFragment"
             app:destination="@id/productEditPriceFragment" />
@@ -146,7 +148,7 @@
     <fragment
         android:id="@+id/productEditPriceFragment"
         android:name="lt.manufaktura.app.user.account.product.edit.ProductEditPriceFragment"
-        android:label="ProductEditPriceFragment" >
+        android:label="ProductEditPriceFragment">
         <action
             android:id="@+id/action_productEditPriceFragment_to_productEditPictureFragment"
             app:destination="@id/productEditPictureFragment" />
@@ -154,9 +156,21 @@
     <fragment
         android:id="@+id/productEditPictureFragment"
         android:name="lt.manufaktura.app.user.account.product.edit.ProductEditPictureFragment"
-        android:label="ProductEditPictureFragment" >
+        android:label="ProductEditPictureFragment">
         <action
             android:id="@+id/action_productEditPictureFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fullScreenImageFragment"
+        android:name="lt.manufaktura.app.user.account.product.FullScreenImageFragment"
+        android:label="fragment_full_screen_image"
+        tools:layout="@layout/fragment_full_screen_image">
+        <action
+            android:id="@+id/action_fullScreenImageFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+        <argument
+            android:name="productId"
+            app:argType="integer" />
     </fragment>
 </navigation>
