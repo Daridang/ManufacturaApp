@@ -69,9 +69,9 @@ public class UserProductionFragment extends Fragment implements OnRecyclerViewIt
     }
 
     @Override
-    public void onClick(Product product) {
+    public void onClick(int id) {
         NavDirections navDirections =
-                UserProductionFragmentDirections.actionUserProductionFragmentToProductDetailsFragment(product);
+                UserProductionFragmentDirections.actionUserProductionFragmentToProductDetailsFragment(id);
 
         NavHostFragment
                 .findNavController(this)

@@ -54,6 +54,10 @@ public class ProductRepository {
         return productAPI.getProductList(token);
     }
 
+    public Observable<Product> getProductById(String token, int id) {
+        return productAPI.getProductById(token, id);
+    }
+
     public Single<Integer> createProduct(String token, Product product) {
         return productAPI.addProduct(
                 token,

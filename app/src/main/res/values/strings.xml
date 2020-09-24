@@ -64,4 +64,5 @@
     <string name="take_picture_btn_txt">Take Picture</string>
     <string name="create_btn_txt">Create</string>
     <string name="details_btn_txt">Detaliau</string>
+    <string name="full_screen_image">Full screen image</string>
 </resources>

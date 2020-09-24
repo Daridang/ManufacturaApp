@@ -54,6 +54,21 @@ public class ProductViewModel extends ViewModel {
         _product.setValue(product);
     }
 
+    public void getProductById(String token, int id) {
+        disposable.add(productRepository.getProductById(token, id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(product1 -> {
+                            _product.postValue(product1);
+                        },
+                        throwable -> {
+                            Log.d("TAGGG", "nu i? : " + throwable.getMessage());
+                            throwable.fillInStackTrace();
+                        }
+                )
+        );
+    }
+
     public void getProducts(String token) {
         disposable.add(productRepository.getProducts(token)
                 .subscribeOn(Schedulers.io())

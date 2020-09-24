@@ -14,6 +14,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -28,6 +29,12 @@ public interface ProductAPI {
     @Headers("Content-Type:application/json; charset=UTF-8")
     @GET("product/getproducts")
     Observable<List<Product>> getProductList(@Header("Authorization") String token);
+
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    @GET("product/getproduct/")
+    Observable<Product> getProductById(
+            @Header("Authorization") String token,
+            @Query("ProductID") int ProductID);
 
     @POST("Product/AddProduct")
     @FormUrlEncoded

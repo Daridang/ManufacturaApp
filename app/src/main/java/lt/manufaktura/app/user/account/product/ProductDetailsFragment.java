@@ -39,16 +39,9 @@ public class ProductDetailsFragment extends Fragment {
     SharedPreferences prefs;
 
     private ProductViewModel productViewModel;
-    private boolean zoomOut;
 
     public ProductDetailsFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -59,17 +52,17 @@ public class ProductDetailsFragment extends Fragment {
         );
 
         productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
-        productViewModel.product.observe(getViewLifecycleOwner(), (binding::setProduct));
 
-        Product p = requireArguments().getParcelable("product");
+        int productId = requireArguments().getInt("productId");
+        productViewModel.getProductById("Bearer " + prefs.getString("Token", ""), productId);
 
-        if (null != p) {
-            binding.setProduct(p);
+        productViewModel.product.observe(getViewLifecycleOwner(), product -> {
+            binding.setProduct(product);
             Glide.with(binding.getRoot().getContext())
-                    .load(Const.BASE_IMAGE_URL + p.getProductPicture())
+                    .load(Const.BASE_IMAGE_URL + product.getProductPicture())
                     .fitCenter()
                     .into(binding.singleProductImageViewId);
-        }
+        });
 
         binding.deleteProductDetailsBtnId.setOnClickListener(v -> {
             productViewModel.deleteProduct("Bearer " + prefs.getString("Token", ""),
@@ -92,6 +85,15 @@ public class ProductDetailsFragment extends Fragment {
             NavHostFragment
                     .findNavController(this)
                     .navigate(R.id.action_productDetailsFragment_to_userProductionFragment);
+        });
+
+        binding.singleProductImageViewId.setOnClickListener(v -> {
+            NavDirections navDirections =
+                    ProductDetailsFragmentDirections.actionProductDetailsFragmentToFullScreenImageFragment(
+                            binding.getProduct().getProductID());
+            NavHostFragment
+                    .findNavController(this)
+                    .navigate(navDirections);
         });
         return binding.getRoot();
     }

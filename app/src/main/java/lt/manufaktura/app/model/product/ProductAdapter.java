@@ -56,7 +56,7 @@ public class ProductAdapter extends
         Product p = products.get(position);
         plib.setProduct(p);
         plib.getRoot().setOnClickListener(v -> {
-            listener.onClick(p);
+            listener.onClick(p.getProductID());
         });
         String picName = null;
         if(p.getProductPicture() != null) {
