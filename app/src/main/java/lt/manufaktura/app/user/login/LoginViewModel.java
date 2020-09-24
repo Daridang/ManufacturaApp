@@ -27,9 +27,13 @@ public class LoginViewModel extends ViewModel {
     private final LoginRepository repository;
 
     private MutableLiveData<LoginResponse> _loginResult = new MutableLiveData<>();
+    private MutableLiveData<String> _error = new MutableLiveData<>();
 
     public LiveData<LoginResponse> getLoginResult() {
         return _loginResult;
+    }
+    public LiveData<String> showErrorMessage() {
+        return _error;
     }
 
     private String email;
@@ -46,12 +50,16 @@ public class LoginViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         loginResult -> {
+                            Log.d("TAGGG", "a?: " + loginResult.toString());
                             if (loginResult.isSuccessful()) {
                                 Log.d("TAGGG", "LoginReesult: " + loginResult.toString());
                                 _loginResult.postValue(loginResult.body());
+                            } else {
+                                _error.postValue(loginResult.toString());
                             }
                         },
                         throwable -> {
+                            _error.postValue(throwable.getMessage());
                             Log.d("TAGGG", "ErrorThrowable " + Objects.requireNonNull(throwable.getMessage()));
                         }
                 )

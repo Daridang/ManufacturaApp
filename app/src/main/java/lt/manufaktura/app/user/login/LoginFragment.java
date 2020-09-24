@@ -12,6 +12,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -83,6 +84,11 @@ public class LoginFragment extends Fragment {
                                                     .setPopUpTo(R.id.loginFragment, true)
                                                     .build());
                         }
+                    });
+
+                    viewModel.showErrorMessage().observe(getViewLifecycleOwner(), error -> {
+                        Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show();
+                        flb.loadingBarId.setVisibility(View.GONE);
                     });
                 }
         );

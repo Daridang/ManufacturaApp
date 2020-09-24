@@ -42,9 +42,15 @@ public class ProductPriceFragment extends Fragment {
         productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
 
         binding.toPictureBtnId.setOnClickListener(v -> {
-            NavHostFragment
-                    .findNavController(this)
-                    .navigate(R.id.action_productPriceFragment_to_productPictureFragment);
+            Log.d("TAGGG", "wtf double price? " + binding.productPriceInputId.getText().toString());
+            if (binding.productPriceInputId.getText().toString().isEmpty()
+            || Double.parseDouble(binding.productPriceInputId.getText().toString()) <= 0.0) {
+                binding.productPriceInputId.setError("Enter price");
+            } else {
+                NavHostFragment
+                        .findNavController(this)
+                        .navigate(R.id.action_productPriceFragment_to_productPictureFragment);
+            }
         });
 
         binding.setViewmodel(productViewModel);

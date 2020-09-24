@@ -30,6 +30,7 @@
                 android:id="@+id/product_description_input_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textLongMessage"
                 android:hint="@string/description_hint"
                 android:singleLine="true"
                 android:text='@={product.description}' />

@@ -41,9 +41,13 @@ public class ProductSectionFragment extends Fragment {
 
         productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
         binding.toDescriptionBtnId.setOnClickListener(v -> {
-            NavHostFragment
-                    .findNavController(this)
-                    .navigate(R.id.action_productSectionFragment_to_productDescriptionFragment);
+            if (binding.productSectionInputId.getText().toString().isEmpty()) {
+                binding.productSectionInputId.setError("Enter section");
+            } else {
+                NavHostFragment
+                        .findNavController(this)
+                        .navigate(R.id.action_productSectionFragment_to_productDescriptionFragment);
+            }
         });
 
         binding.setViewmodel(productViewModel);

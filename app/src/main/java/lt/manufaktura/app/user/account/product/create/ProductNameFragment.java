@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.bumptech.glide.Glide;
 
@@ -51,9 +52,13 @@ public class ProductNameFragment extends Fragment {
         productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
 
         binding.toCategoryBtnId.setOnClickListener(v -> {
-            NavHostFragment
-                    .findNavController(this)
-                    .navigate(R.id.action_productNameFragment_to_productCategoryFragment);
+            if(binding.productNameInputId.getText().toString().isEmpty()) {
+                binding.productNameInputId.setError("Enter name");
+            } else {
+                NavHostFragment
+                        .findNavController(this)
+                        .navigate(R.id.action_productNameFragment_to_productCategoryFragment);
+            }
         });
 
         binding.setViewmodel(productViewModel);

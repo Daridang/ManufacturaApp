@@ -40,9 +40,13 @@ public class ProductDescriptionFragment extends Fragment {
 
         productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
         binding.toPriceBtnId.setOnClickListener(v -> {
-            NavHostFragment
-                    .findNavController(this)
-                    .navigate(R.id.action_productDescriptionFragment_to_productPriceFragment);
+            if (binding.productDescriptionInputId.getText().toString().isEmpty()) {
+                binding.productDescriptionInputId.setError("Enter description");
+            } else {
+                NavHostFragment
+                        .findNavController(this)
+                        .navigate(R.id.action_productDescriptionFragment_to_productPriceFragment);
+            }
         });
 
         binding.setViewmodel(productViewModel);

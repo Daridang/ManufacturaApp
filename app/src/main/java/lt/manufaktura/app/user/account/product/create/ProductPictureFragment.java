@@ -65,10 +65,16 @@ public class ProductPictureFragment extends Fragment {
         binding.setProduct(productViewModel.getProduct());
 
         binding.createBtnId.setOnClickListener(v -> {
-            productViewModel.createProduct("Bearer " + prefs.getString("Token", ""), binding.getProduct());
-            NavHostFragment
-                    .findNavController(this)
-                    .navigate(R.id.action_productPictureFragment_to_userProductionFragment);
+            if (binding.getProduct().getProductImage() == null) {
+                Toast.makeText(requireContext(), "Choose image", Toast.LENGTH_LONG).show();
+            } else if (binding.productPictureNameInputId.getText().toString().isEmpty()) {
+                binding.productPictureNameInputId.setError("Enter image name");
+            } else {
+                productViewModel.createProduct("Bearer " + prefs.getString("Token", ""), binding.getProduct());
+                NavHostFragment
+                        .findNavController(this)
+                        .navigate(R.id.action_productPictureFragment_to_userProductionFragment);
+            }
         });
 
         binding.takePictureBtnId.setOnClickListener(v -> {
