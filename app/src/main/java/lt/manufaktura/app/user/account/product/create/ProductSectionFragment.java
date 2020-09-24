@@ -40,7 +40,6 @@ public class ProductSectionFragment extends Fragment {
         );
 
         productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
-        Log.d("TAGGG", "product=: " + productViewModel.getProduct());
         binding.toDescriptionBtnId.setOnClickListener(v -> {
             NavHostFragment
                     .findNavController(this)

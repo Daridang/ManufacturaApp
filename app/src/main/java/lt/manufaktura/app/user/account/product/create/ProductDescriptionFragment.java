@@ -1,7 +1,6 @@
 package lt.manufaktura.app.user.account.product.create;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +39,6 @@ public class ProductDescriptionFragment extends Fragment {
         );
 
         productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
-        Log.d("TAGGG", "product=: " + productViewModel.getProduct());
         binding.toPriceBtnId.setOnClickListener(v -> {
             NavHostFragment
                     .findNavController(this)

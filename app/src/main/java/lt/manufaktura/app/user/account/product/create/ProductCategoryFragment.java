@@ -1,7 +1,6 @@
 package lt.manufaktura.app.user.account.product.create;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +46,6 @@ public class ProductCategoryFragment extends Fragment {
                     .navigate(R.id.action_productCategoryFragment_to_productSectionFragment);
         });
 
-        Log.d("TAGGG", "productName: " + productViewModel.getProduct());
         binding.setViewmodel(productViewModel);
         binding.setProduct(productViewModel.getProduct());
         return binding.getRoot();

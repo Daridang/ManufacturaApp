@@ -8,14 +8,13 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.List;
+import java.util.Objects;
 
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import lt.manufaktura.app.repository.ProductRepository;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
 /**
  * Created by
@@ -47,6 +46,7 @@ public class ProductViewModel extends ViewModel {
     }
 
     public Product getProduct() {
+        Objects.requireNonNull(product.getValue()).setSection("Stalius");
         return product.getValue();
     }
 
@@ -59,7 +59,6 @@ public class ProductViewModel extends ViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(productResponse -> {
-                            Log.d("TAGGG", "product response: " + productResponse);
                             _productList.postValue(productResponse);
                         },
                         throwable -> {
