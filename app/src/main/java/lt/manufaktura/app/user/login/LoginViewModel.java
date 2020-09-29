@@ -1,13 +1,10 @@
 package lt.manufaktura.app.user.login;
 
-import android.util.Log;
 
 import androidx.hilt.lifecycle.ViewModelInject;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import java.util.Objects;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -32,6 +29,7 @@ public class LoginViewModel extends ViewModel {
     public LiveData<LoginResponse> getLoginResult() {
         return _loginResult;
     }
+
     public LiveData<String> showErrorMessage() {
         return _error;
     }
@@ -50,18 +48,13 @@ public class LoginViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         loginResult -> {
-                            Log.d("TAGGG", "a?: " + loginResult.toString());
                             if (loginResult.isSuccessful()) {
-                                Log.d("TAGGG", "LoginReesult: " + loginResult.toString());
                                 _loginResult.postValue(loginResult.body());
                             } else {
                                 _error.postValue(loginResult.toString());
                             }
                         },
-                        throwable -> {
-                            _error.postValue(throwable.getMessage());
-                            Log.d("TAGGG", "ErrorThrowable " + Objects.requireNonNull(throwable.getMessage()));
-                        }
+                        throwable -> _error.postValue(throwable.getMessage())
                 )
         );
     }

@@ -7,9 +7,6 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 /**
  * Created by
  * +-+-+-+-+-+-+-+-+
@@ -22,21 +19,13 @@ public class Product implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     public int productID;
 
-//    @SerializedName("Name")
     private String name;
-//    @SerializedName("Section")
     private String section;
-//    @SerializedName("Price")
     private double price;
-//    @SerializedName("Category")
     private String category;
-//    @SerializedName("Description")
     private String description;
-//    @SerializedName("ProductPicture")
     private String productPicture;
-//    @SerializedName("ProductPictureUrl")
     private String productPictureUrl;
-//    @SerializedName("ProductImage")
     private String productImage;
 
     Product(int productID, String name, String section, double price, String category, String description,

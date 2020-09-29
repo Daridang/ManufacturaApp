@@ -1,7 +1,6 @@
 package lt.manufaktura.app.repository;
 
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import java.util.List;
 

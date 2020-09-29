@@ -59,38 +59,38 @@ public class LoginFragment extends Fragment {
         );
 
         viewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
-        viewModel.setEmail(prefs.getString("UserEmail", ""));
         flb.setViewmodel(viewModel);
 
         flb.loginBtnId.setOnClickListener(v -> {
-//                    String email = flb.emailInput.getText().toString();
-//                    prefs.edit().putString("UserEmail", email).apply();
-//                    String password = flb.passwordInput.getText().toString();
-//                    viewModel.login(email, password);
-                    flb.loadingBarId.setVisibility(View.VISIBLE);
-//                    viewModel.login("stalius@manufaktura.lt", "Manufaktura2!");
-                    viewModel.login("keramika@manufaktura.lt", "K3r@m1k@");
-                    viewModel.getLoginResult().observe(getViewLifecycleOwner(), loginResult -> {
-                        if (loginResult != null) {
+                    String email = flb.emailInput.getText().toString();
+                    String password = flb.passwordInput.getText().toString();
+                    if (flb.emailInput.getText().toString().isEmpty() || flb.passwordInput.getText().toString().isEmpty()) {
+                        flb.emailInput.setError("Please fill all fields");
+                    } else {
+                        viewModel.login(email, password);
+                        flb.loadingBarId.setVisibility(View.VISIBLE);
+                        viewModel.getLoginResult().observe(getViewLifecycleOwner(), loginResult -> {
+                            if (loginResult != null) {
+                                flb.loadingBarId.setVisibility(View.GONE);
+                                SharedPreferences.Editor spEditor = prefs.edit();
+                                spEditor.putString("Token", loginResult.getToken());
+                                spEditor.putString("Expiration", loginResult.getExpiration());
+                                spEditor.apply();
+
+                                NavHostFragment
+                                        .findNavController(this)
+                                        .navigate(R.id.action_loginFragment_to_accountFragment, null,
+                                                new NavOptions.Builder()
+                                                        .setPopUpTo(R.id.loginFragment, true)
+                                                        .build());
+                            }
+                        });
+
+                        viewModel.showErrorMessage().observe(getViewLifecycleOwner(), error -> {
+                            Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show();
                             flb.loadingBarId.setVisibility(View.GONE);
-                            SharedPreferences.Editor spEditor = prefs.edit();
-                            spEditor.putString("Token", loginResult.getToken());
-                            spEditor.putString("Expiration", loginResult.getExpiration());
-                            spEditor.apply();
-
-                            NavHostFragment
-                                    .findNavController(this)
-                                    .navigate(R.id.action_loginFragment_to_accountFragment, null,
-                                            new NavOptions.Builder()
-                                                    .setPopUpTo(R.id.loginFragment, true)
-                                                    .build());
-                        }
-                    });
-
-                    viewModel.showErrorMessage().observe(getViewLifecycleOwner(), error -> {
-                        Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show();
-                        flb.loadingBarId.setVisibility(View.GONE);
-                    });
+                        });
+                    }
                 }
         );
 

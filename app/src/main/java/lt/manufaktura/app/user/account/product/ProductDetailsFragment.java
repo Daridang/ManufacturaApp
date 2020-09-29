@@ -3,25 +3,18 @@ package lt.manufaktura.app.user.account.product;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
-import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -29,7 +22,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 import lt.manufaktura.app.Const;
 import lt.manufaktura.app.R;
 import lt.manufaktura.app.databinding.FragmentProductDetailsBinding;
-import lt.manufaktura.app.model.product.Product;
 import lt.manufaktura.app.model.product.ProductViewModel;
 
 @AndroidEntryPoint
