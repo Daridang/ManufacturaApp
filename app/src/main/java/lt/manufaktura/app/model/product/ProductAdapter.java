@@ -72,6 +72,10 @@ public class ProductAdapter extends
         }
     }
 
+    public void clearList() {
+        products.clear();
+    }
+
     @Override
     public int getItemCount() {
         return products == null ? 0 : products.size();

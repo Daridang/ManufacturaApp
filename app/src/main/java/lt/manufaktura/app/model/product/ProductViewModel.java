@@ -31,6 +31,7 @@ public class ProductViewModel extends ViewModel {
 
     private MutableLiveData<List<Product>> _productList = new MutableLiveData<>();
     private MutableLiveData<Product> _product = new MutableLiveData<>();
+    public MutableLiveData<Boolean> _isRefreshNeeded = new MutableLiveData<>(false);
 
     public LiveData<List<Product>> products = _productList;
     public LiveData<Product> product = _product;
@@ -46,7 +47,6 @@ public class ProductViewModel extends ViewModel {
     }
 
     public Product getProduct() {
-        Objects.requireNonNull(product.getValue()).setSection("Stalius");
         return product.getValue();
     }
 
@@ -74,6 +74,9 @@ public class ProductViewModel extends ViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(productResponse -> {
+                            if (_productList.getValue() != null) {
+                                _productList.getValue().clear();
+                            }
                             _productList.postValue(productResponse);
                         },
                         throwable -> {
@@ -96,6 +99,7 @@ public class ProductViewModel extends ViewModel {
                 .subscribe(
                         v -> {
                             Log.d("TAGGG", "?? " + v.toString());
+                            _isRefreshNeeded.postValue(true);
                         },
                         throwable -> {
                             Log.d("TAGGG", "wtf throwable : " + throwable.getMessage());

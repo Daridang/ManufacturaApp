@@ -76,6 +76,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_email_mail_com"
+                    android:text="Keramika@manufaktura.website"
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,6 +94,7 @@
                     android:id="@+id/password_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="K3r@m1k@"
                     android:hint="@string/hint_password"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>

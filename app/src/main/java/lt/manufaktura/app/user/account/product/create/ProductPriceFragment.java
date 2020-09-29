@@ -42,7 +42,6 @@ public class ProductPriceFragment extends Fragment {
         productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
 
         binding.toPictureBtnId.setOnClickListener(v -> {
-            Log.d("TAGGG", "wtf double price? " + binding.productPriceInputId.getText().toString());
             if (binding.productPriceInputId.getText().toString().isEmpty()
             || Double.parseDouble(binding.productPriceInputId.getText().toString()) <= 0.0) {
                 binding.productPriceInputId.setError("Enter price");

@@ -68,7 +68,8 @@ public class LoginFragment extends Fragment {
 //                    String password = flb.passwordInput.getText().toString();
 //                    viewModel.login(email, password);
                     flb.loadingBarId.setVisibility(View.VISIBLE);
-                    viewModel.login("stalius@manufaktura.lt", "Manufaktura2!");
+//                    viewModel.login("stalius@manufaktura.lt", "Manufaktura2!");
+                    viewModel.login("keramika@manufaktura.lt", "K3r@m1k@");
                     viewModel.getLoginResult().observe(getViewLifecycleOwner(), loginResult -> {
                         if (loginResult != null) {
                             flb.loadingBarId.setVisibility(View.GONE);
