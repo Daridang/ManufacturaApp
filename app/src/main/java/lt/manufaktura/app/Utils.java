@@ -20,6 +20,7 @@ import java.util.TimeZone;
  * on 2020-08-20.
  */
 public class Utils {
+    String psw = "jbe5oecfmzcetg7zhcbt5i3crpky4gdjva7rf7m3733rsu2koygq";
     @InverseMethod("toText")
     public static double toDouble(String price) {
         double p = 0.0;
