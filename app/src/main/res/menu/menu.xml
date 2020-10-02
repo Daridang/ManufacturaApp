@@ -11,8 +11,8 @@
 <!--        android:icon="@android:drawable/btn_star_big_on"-->
 <!--        android:title="ShowData" />-->
 
-    <item
-        android:id="@id/createEntityFragment"
-        android:icon="@android:drawable/btn_star_big_on"
-        android:title="@string/entity_menu_item_title" />
+<!--    <item-->
+<!--        android:id="@id/createEntityFragment"-->
+<!--        android:icon="@android:drawable/btn_star_big_on"-->
+<!--        android:title="@string/entity_menu_item_title" />-->
 </menu>

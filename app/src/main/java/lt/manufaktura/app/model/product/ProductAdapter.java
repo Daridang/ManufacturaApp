@@ -13,7 +13,7 @@ import java.util.List;
 
 import lt.manufaktura.app.Const;
 import lt.manufaktura.app.R;
-import lt.manufaktura.app.databinding.ProductItemBinding;
+import lt.manufaktura.app.databinding.ProductListItemBinding;
 import lt.manufaktura.app.user.account.OnRecyclerViewItemClickListener;
 
 /**
@@ -29,7 +29,7 @@ public class ProductAdapter extends
     private OnRecyclerViewItemClickListener listener;
 
     private List<Product> products;
-    private ProductItemBinding pib;
+    private ProductListItemBinding plib;
 
     public ProductAdapter(
             List<Product> products,
@@ -42,21 +42,21 @@ public class ProductAdapter extends
     @Override
     public ProductViewHolder onCreateViewHolder(
             @NonNull ViewGroup parent, int viewType) {
-        pib = DataBindingUtil.inflate(
+        plib = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext()),
-                R.layout.product_item,
+                R.layout.product_list_item,
                 parent,
                 false
         );
-        return new ProductViewHolder(pib);
+        return new ProductViewHolder(plib);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product p = products.get(position);
-        pib.setProduct(p);
-        pib.getRoot().setOnClickListener(v -> {
-            listener.onClick(p);
+        plib.setProduct(p);
+        plib.getRoot().setOnClickListener(v -> {
+            listener.onClick(p.getProductID());
         });
         String picName = null;
         if(p.getProductPicture() != null) {
@@ -68,8 +68,12 @@ public class ProductAdapter extends
             Glide.with(holder.itemView.getContext())
                     .load(Const.BASE_IMAGE_URL + picName)
                     .fitCenter()
-                    .into(pib.productItemImageViewId);
+                    .into(plib.productItemImageViewId);
         }
+    }
+
+    public void clearList() {
+        products.clear();
     }
 
     @Override
@@ -79,7 +83,7 @@ public class ProductAdapter extends
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        public ProductViewHolder(@NonNull ProductItemBinding itemView) {
+        public ProductViewHolder(@NonNull ProductListItemBinding itemView) {
             super(itemView.getRoot());
 
         }

@@ -3,25 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/show_data_recycler_view_id"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_margin="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/product_item" />
+            tools:listitem="@layout/product_list_item" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/create_product_btn_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="36dp"
             android:backgroundTint="@color/design_default_color_primary"
-            android:src="@android:drawable/ic_input_add" />
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            android:src="@android:drawable/ic_input_add"
+            app:layout_constraintBottom_toBottomOf="@+id/show_data_recycler_view_id"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

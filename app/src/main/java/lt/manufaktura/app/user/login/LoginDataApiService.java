@@ -17,7 +17,7 @@ import retrofit2.http.POST;
  */
 public interface LoginDataApiService {
 
-    @POST("bandymas/login")
+    @POST("authentication/login")
     @FormUrlEncoded
     Observable<Response<LoginResponse>> login(@FieldMap Map<String, String> params);
 }

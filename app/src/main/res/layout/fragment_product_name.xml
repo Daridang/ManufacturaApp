@@ -31,6 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/product_name_hint"
+                android:inputType="textShortMessage"
                 android:singleLine="true"
                 android:text='@={product.name}' />
         </com.google.android.material.textfield.TextInputLayout>

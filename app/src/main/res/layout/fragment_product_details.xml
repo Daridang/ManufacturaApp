@@ -13,14 +13,42 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_id"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:gravity="center_horizontal|center_vertical"
+            android:minHeight="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/toolbar_title_txt_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="?attr/actionBarSize"
+                android:layout_marginEnd="?attr/actionBarSize"
+                android:gravity="center"
+                android:text="Product details"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+        </androidx.appcompat.widget.Toolbar>
+
         <ImageView
             android:id="@+id/single_product_image_view_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="240dp"
+            android:maxHeight="240dp"
+            android:layout_margin="24dp"
+            android:contentDescription="@{product.productPicture}"
             app:layout_constraintBottom_toTopOf="@+id/product_details_name_title_txt_id"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/toolbar_id" />
 
         <TextView
             android:id="@+id/product_details_name_title_txt_id"
@@ -51,7 +79,7 @@
             android:id="@+id/product_details_price_title_txt_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="24dp"
             android:text="@string/product_item_price"
             app:layout_constraintStart_toStartOf="@+id/product_details_description_title_txt_id"
             app:layout_constraintTop_toBottomOf="@+id/product_details_category_title_txt_id" />
@@ -60,10 +88,9 @@
             android:id="@+id/product_details_name_txt_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="171dp"
             android:text="@{product.name}"
             app:layout_constraintEnd_toEndOf="@+id/product_details_section_txt_id"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/single_product_image_view_id" />
 
         <TextView
             android:id="@+id/product_details_section_txt_id"
@@ -85,7 +112,7 @@
             android:id="@+id/product_details_price_txt_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="24dp"
             android:text='@{"" + product.price}'
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/product_details_category_txt_id" />
@@ -101,29 +128,36 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/product_details_price_title_txt_id" />
 
-        <TextView
-            android:id="@+id/product_details_description_txt_id"
+        <ScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="16dp"
-            android:gravity="start"
-            android:text="@{product.description}"
-            android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/delete_product_details_btn_id"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/product_details_description_title_txt_id" />
+            app:layout_constraintTop_toBottomOf="@+id/product_details_description_title_txt_id" >
 
-        <Button
-            android:id="@+id/edit_product_details_btn_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="@string/edit_product_details_btn"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/delete_product_details_btn_id"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/product_details_description_txt_id"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_margin="16dp"
+                android:singleLine="false"
+                android:gravity="start"
+                android:text="@{product.description}"
+                android:textSize="16sp" />
+        </ScrollView>
+
+<!--        <Button-->
+<!--            android:id="@+id/edit_product_details_btn_id"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="16dp"-->
+<!--            android:text="@string/edit_product_details_btn"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toStartOf="@+id/delete_product_details_btn_id"-->
+<!--            app:layout_constraintHorizontal_bias="0.5"-->
+<!--            app:layout_constraintStart_toStartOf="parent" />-->
 
         <Button
             android:id="@+id/delete_product_details_btn_id"
@@ -134,7 +168,7 @@
             android:text="@string/delete_product_btn"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/edit_product_details_btn_id" />
+            app:layout_constraintTop_toBottomOf="@id/scroll_view"
+            app:layout_constraintHorizontal_bias="0.5" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

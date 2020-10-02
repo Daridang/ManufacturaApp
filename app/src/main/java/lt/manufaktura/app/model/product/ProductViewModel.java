@@ -14,8 +14,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import lt.manufaktura.app.repository.ProductRepository;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
 /**
  * Created by
@@ -32,6 +30,7 @@ public class ProductViewModel extends ViewModel {
 
     private MutableLiveData<List<Product>> _productList = new MutableLiveData<>();
     private MutableLiveData<Product> _product = new MutableLiveData<>();
+    public MutableLiveData<Boolean> _isRefreshNeeded = new MutableLiveData<>(false);
 
     public LiveData<List<Product>> products = _productList;
     public LiveData<Product> product = _product;
@@ -54,26 +53,35 @@ public class ProductViewModel extends ViewModel {
         _product.setValue(product);
     }
 
-    public void getProducts() {
-        disposable.add(productRepository.getProducts()
+    public void getProductById(String token, int id) {
+        disposable.add(productRepository.getProductById(token, id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(product1 -> {
+                            _product.postValue(product1);
+                        },
+                        throwable -> {
+                            Log.d("TAGGG", "nu i? : " + throwable.getMessage());
+                            throwable.fillInStackTrace();
+                        }
+                )
+        );
+    }
+
+    public void getProducts(String token) {
+        disposable.add(productRepository.getProducts(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(productResponse -> {
-                            Log.d("TAGGG", "product response: " + productResponse);
+                            if (_productList.getValue() != null) {
+                                _productList.getValue().clear();
+                            }
                             _productList.postValue(productResponse);
                         },
                         throwable -> {
                             Log.d("TAGGG", "Throwable: " + throwable.getMessage());
                         })
         );
-    }
-
-    public void uploadProduct(RequestBody product) {
-
-        productRepository.uploadProduct(product);
-//
-//        Call<UserResponse> call = application.getMyAPIService().updateUser(application.getCurrentUser().token, application.getCurrentUser().id, requestBody);
-
     }
 
     public void insertProduct(Product product) {
@@ -83,23 +91,24 @@ public class ProductViewModel extends ViewModel {
                 .subscribe();
     }
 
-    public void createProduct(Product product) {
-        disposable.add(productRepository.createProduct(product)
+    public void createProduct(String token, Product product) {
+        disposable.add(productRepository.createProduct(token, product)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         v -> {
-                            Log.d("TAGGG", "?? " + v);
+                            Log.d("TAGGG", "?? " + v.toString());
+                            _isRefreshNeeded.postValue(true);
                         },
                         throwable -> {
-                            Log.d("TAGGG", "wtf: " + throwable.getMessage());
+                            Log.d("TAGGG", "wtf throwable : " + throwable.getMessage());
                         }
                 )
         );
     }
 
-    public void editProduct(Product product) {
-        disposable.add(productRepository.updateProduct(product)
+    public void editProduct(String token, Product product) {
+        disposable.add(productRepository.updateProduct(token, product)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -113,8 +122,8 @@ public class ProductViewModel extends ViewModel {
         );
     }
 
-    public void deleteProduct(int id) {
-        disposable.add(productRepository.deleteProduct(id)
+    public void deleteProduct(String token, int id) {
+        disposable.add(productRepository.deleteProduct(token, id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

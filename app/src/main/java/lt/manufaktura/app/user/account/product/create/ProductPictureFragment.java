@@ -1,6 +1,7 @@
 package lt.manufaktura.app.user.account.product.create;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -8,7 +9,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,32 +28,29 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.inject.Inject;
+
 import dagger.hilt.android.AndroidEntryPoint;
 import lt.manufaktura.app.R;
 import lt.manufaktura.app.databinding.FragmentProductPictureBinding;
 import lt.manufaktura.app.model.product.ProductViewModel;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-
 import static android.app.Activity.RESULT_OK;
 
 
 @AndroidEntryPoint
 public class ProductPictureFragment extends Fragment {
-    static final int REQUEST_TAKE_PHOTO = 1;
-    String currentPhotoPath;
+
+    @Inject
+    SharedPreferences prefs;
+
+    private static final int REQUEST_TAKE_PHOTO = 1;
+    private static final int REQUEST_PICK_PHOTO = 2;
+    private Uri photoURI;
     private ProductViewModel productViewModel;
     private FragmentProductPictureBinding binding;
 
     public ProductPictureFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.d("TAGGG", " onCreate ");
     }
 
     @Override
@@ -68,43 +65,63 @@ public class ProductPictureFragment extends Fragment {
         binding.setProduct(productViewModel.getProduct());
 
         binding.createBtnId.setOnClickListener(v -> {
-            encodeBitMapToBase64();
-            Log.d("TAGGG", binding.getProduct().toString());
-            productViewModel.createProduct(binding.getProduct());
-            NavHostFragment
-                    .findNavController(this)
-                    .navigate(R.id.action_productPictureFragment_to_userProductionFragment);
+            if (binding.getProduct().getProductImage() == null) {
+                Toast.makeText(requireContext(), "Choose image", Toast.LENGTH_LONG).show();
+            } else if (binding.productPictureNameInputId.getText().toString().isEmpty()) {
+                binding.productPictureNameInputId.setError("Enter image name");
+            } else {
+                productViewModel.createProduct("Bearer " + prefs.getString("Token", ""), binding.getProduct());
+                NavHostFragment
+                        .findNavController(this)
+                        .navigate(R.id.action_productPictureFragment_to_userProductionFragment);
+            }
         });
 
         binding.takePictureBtnId.setOnClickListener(v -> {
             dispatchTakePictureIntent();
         });
+
+        binding.openGalleryBtnId.setOnClickListener(v -> {
+            pickFromGallery();
+        });
         return binding.getRoot();
     }
 
-    private void uploadImage() {
-        MultipartBody.Builder builder = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM);
-        File f = new File(currentPhotoPath);
-        RequestBody image = RequestBody.create(MediaType.parse("image/*"), f);
-        builder.addFormDataPart("user[ProductImage]", f.getName(), image);
-        MultipartBody requestBody = builder.build();
-        productViewModel.uploadProduct(requestBody);
+    private Bitmap scaleDown(Bitmap realImage, float maxImageSize, boolean filter) {
+        float ratio = Math.min(
+                maxImageSize / realImage.getWidth(),
+                maxImageSize / realImage.getHeight()
+        );
+        int width = Math.round(ratio * realImage.getWidth());
+        int height = Math.round(ratio * realImage.getHeight());
+
+        return Bitmap.createScaledBitmap(realImage, width, height, filter);
     }
 
-    private void encodeBitMapToBase64() {
-        File f = new File(currentPhotoPath);
-        Uri imageUri = Uri.fromFile(f);
+    private void pickFromGallery() {
+        Intent gallery = new Intent(Intent.ACTION_PICK,
+                MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        Intent intent = gallery.setType("image/*");
+        startActivityForResult(intent, REQUEST_PICK_PHOTO);
+    }
+
+    private void encodeBitMapToBase64(Uri uri) {
         try {
-            InputStream imageStream = requireActivity().getContentResolver().openInputStream(imageUri);
+            InputStream imageStream = requireActivity().getContentResolver().openInputStream(uri);
             Bitmap selectedImageBM = BitmapFactory.decodeStream(imageStream);
+            Bitmap scaledBitmap = scaleDown(selectedImageBM, 492f, true);
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            selectedImageBM.compress(Bitmap.CompressFormat.JPEG, 100,
-                    byteArrayOutputStream);
+            scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+
             byte[] bytes = byteArrayOutputStream.toByteArray();
 
             String image = Base64.encodeToString(bytes, 0);
-            binding.getProduct().setProductPicture(image);
+
+            byte[] decodedString = Base64.decode(image, Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            binding.imageViewId.setImageBitmap(decodedByte);
+            binding.getProduct().setProductImage(image);
+
         } catch (FileNotFoundException e) {
             Toast.makeText(requireContext(), "File not found.", Toast.LENGTH_LONG).show();
             e.printStackTrace();
@@ -120,13 +137,14 @@ public class ProductPictureFragment extends Fragment {
             try {
                 photoFile = createImageFile();
             } catch (IOException ex) {
-                Log.d("TAGGG", ex.getMessage());
+                ex.fillInStackTrace();
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(requireContext(),
+                photoURI = FileProvider.getUriForFile(requireContext(),
                         "lt.manufaktura.app.fileprovider",
                         photoFile);
+
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
@@ -134,40 +152,26 @@ public class ProductPictureFragment extends Fragment {
     }
 
     private File createImageFile() throws IOException {
-        // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
+        return File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
     }
 
-    private void galleryAddPic() {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(currentPhotoPath);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-        requireActivity().sendBroadcast(mediaScanIntent);
-    }
-
-    private void setPic() {
+    private void setPic(String imagePath) {
         // Get the dimensions of the View
         int targetW = binding.imageViewId.getWidth();
         int targetH = binding.imageViewId.getHeight();
-        Log.d("TAGGG", " targetW: " + targetW + " targetH: " + targetH);
 
         // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
 
-        BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
+        BitmapFactory.decodeFile(imagePath, bmOptions);
 
         int photoW = bmOptions.outWidth;
         int photoH = bmOptions.outHeight;
@@ -183,17 +187,28 @@ public class ProductPictureFragment extends Fragment {
         bmOptions.inSampleSize = scaleFactor;
         bmOptions.inPurgeable = true;
 
-        Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
+        Bitmap bitmap = BitmapFactory.decodeFile(imagePath, bmOptions);
         binding.imageViewId.setImageBitmap(bitmap);
-        galleryAddPic();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("TAGGG", " onActivityResult, Intent: " + (data == null));
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-            Log.d("TAGGG", " onActivityResult, result: " + resultCode);
-            setPic();
+            setPic(photoURI.getPath());
+            encodeBitMapToBase64(photoURI);
+        }
+
+        if (requestCode == REQUEST_PICK_PHOTO && resultCode == RESULT_OK) {
+            if (data != null) {
+                Uri uri = data.getData();
+                try {
+                    Bitmap bitmap =
+                            MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), uri);
+                    encodeBitMapToBase64(uri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

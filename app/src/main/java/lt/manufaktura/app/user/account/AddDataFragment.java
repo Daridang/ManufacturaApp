@@ -1,5 +1,6 @@
 package lt.manufaktura.app.user.account;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -19,6 +20,8 @@ import android.widget.Toast;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.inject.Inject;
+
 import dagger.hilt.android.AndroidEntryPoint;
 import lt.manufaktura.app.R;
 import lt.manufaktura.app.databinding.FragmentAddDataBinding;
@@ -32,6 +35,9 @@ public class AddDataFragment extends Fragment {
     private ProductViewModel productViewModel;
     private FragmentAddDataBinding fadb;
 
+    @Inject
+    SharedPreferences prefs;
+
     public AddDataFragment() {
         // Required empty public constructor
     }
@@ -44,7 +50,8 @@ public class AddDataFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
-        productViewModel.getProducts();
+
+        productViewModel.getProducts(prefs.getString("Token", ""));
         productViewModel.products.observe(this, products -> {
 
         });

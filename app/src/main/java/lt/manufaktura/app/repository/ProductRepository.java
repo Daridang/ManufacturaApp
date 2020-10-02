@@ -1,5 +1,7 @@
 package lt.manufaktura.app.repository;
 
+import android.content.SharedPreferences;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -9,7 +11,6 @@ import io.reactivex.Single;
 import lt.manufaktura.app.model.product.Product;
 import lt.manufaktura.app.model.product.ProductDAO;
 import lt.manufaktura.app.service.ProductAPI;
-import okhttp3.RequestBody;
 
 /**
  * Created by
@@ -19,6 +20,9 @@ import okhttp3.RequestBody;
  * on 2020-07-31.
  */
 public class ProductRepository {
+
+    @Inject
+    SharedPreferences prefs;
 
     private ProductDAO productDAO;
     private ProductAPI productAPI;
@@ -45,38 +49,42 @@ public class ProductRepository {
         return productDAO.getAllProducts();
     }
 
-    public Observable<List<Product>> getProducts() {
-        return productAPI.getProductList();
+    public Observable<List<Product>> getProducts(String token) {
+        return productAPI.getProductList(token);
     }
 
-    public Single<Integer> uploadProduct(RequestBody product) {
-        return productAPI.uploadProduct(product);
+    public Observable<Product> getProductById(String token, int id) {
+        return productAPI.getProductById(token, id);
     }
 
-    public Single<Integer> createProduct(Product product) {
+    public Single<Integer> createProduct(String token, Product product) {
         return productAPI.addProduct(
+                token,
                 product.getName(),
                 product.getSection(),
                 product.getPrice(),
                 product.getCategory(),
                 product.getDescription(),
-                product.getProductPicture()
+                product.getProductPicture(),
+                product.getProductImage()
         );
     }
 
-    public Single<Integer> updateProduct(Product product) {
-        return productAPI.editProduct(
-                product.getProductID(),
+    public Single<Integer> updateProduct(String token, Product product) {
+        return productAPI.addProduct(
+                token,
+//                product.getProductID(),
                 product.getName(),
                 product.getSection(),
                 product.getPrice(),
                 product.getCategory(),
                 product.getDescription(),
-                product.getProductPicture()
+                product.getProductPicture(),
+                product.getProductImage()
         );
     }
 
-    public Single<Integer> deleteProduct(int id) {
-        return productAPI.deleteProduct(id);
+    public Single<Integer> deleteProduct(String token, int id) {
+        return productAPI.deleteProduct(token, id);
     }
 }

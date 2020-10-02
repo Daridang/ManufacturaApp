@@ -1,7 +1,6 @@
 package lt.manufaktura.app.user.account.product.create;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,11 +39,14 @@ public class ProductSectionFragment extends Fragment {
         );
 
         productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
-        Log.d("TAGGG", "product=: " + productViewModel.getProduct());
         binding.toDescriptionBtnId.setOnClickListener(v -> {
-            NavHostFragment
-                    .findNavController(this)
-                    .navigate(R.id.action_productSectionFragment_to_productDescriptionFragment);
+            if (binding.productSectionInputId.getText().toString().isEmpty()) {
+                binding.productSectionInputId.setError("Enter section");
+            } else {
+                NavHostFragment
+                        .findNavController(this)
+                        .navigate(R.id.action_productSectionFragment_to_productDescriptionFragment);
+            }
         });
 
         binding.setViewmodel(productViewModel);

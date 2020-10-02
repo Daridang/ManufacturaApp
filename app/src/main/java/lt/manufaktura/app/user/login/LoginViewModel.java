@@ -1,13 +1,10 @@
 package lt.manufaktura.app.user.login;
 
-import android.util.Log;
 
 import androidx.hilt.lifecycle.ViewModelInject;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import java.util.Objects;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -27,10 +24,17 @@ public class LoginViewModel extends ViewModel {
     private final LoginRepository repository;
 
     private MutableLiveData<LoginResponse> _loginResult = new MutableLiveData<>();
+    private MutableLiveData<String> _error = new MutableLiveData<>();
 
     public LiveData<LoginResponse> getLoginResult() {
         return _loginResult;
     }
+
+    public LiveData<String> showErrorMessage() {
+        return _error;
+    }
+
+    private String email;
 
     @ViewModelInject
     public LoginViewModel(LoginRepository repository) {
@@ -45,18 +49,21 @@ public class LoginViewModel extends ViewModel {
                 .subscribe(
                         loginResult -> {
                             if (loginResult.isSuccessful()) {
-                                Log.d("TAGGG", "LoginReesult: " + loginResult.toString());
                                 _loginResult.postValue(loginResult.body());
+                            } else {
+                                _error.postValue(loginResult.toString());
                             }
                         },
-                        throwable -> {
-                            Log.d("TAGGG", "ErrorThrowable " + Objects.requireNonNull(throwable.getMessage()));
-                        }
+                        throwable -> _error.postValue(throwable.getMessage())
                 )
         );
     }
 
-    public String userName() {
-        return "Username";
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String userEmail() {
+        return email;
     }
 }
